@@ -22,7 +22,7 @@ const path         = require('path');
 // IF YOU STILL DIDN'T, GO TO 'configs/passport.js' AND UN-COMMENT OUT THE WHOLE FILE
 
 mongoose
-  .connect('mongodb://localhost/project-management-server', {useNewUrlParser: true})
+  .connect('mongodb://localhost/news-comments-server', {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -74,5 +74,10 @@ app.locals.title = 'Express - Generated with IronGenerator';
 const index = require('./routes/index');
 app.use('/', index);
 
+app.use('/api', require('./routes/new-routes'));
+
+app.use('/api', require('./routes/comment-routes'));
+
+app.use('/api', require('./routes/response-routes'));
 
 module.exports = app;

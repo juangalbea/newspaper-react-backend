@@ -1,14 +1,14 @@
-// models/response-model.js
+// models/reply-model.js
 
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-const responseSchema = new Schema({
+const replySchema = new Schema({
   title: String,
   description: String,
   comment: {type: Schema.Types.ObjectId, ref: 'Comment'}
 });
 
-const Response = mongoose.model('Response', responseSchema);
+const Reply = mongoose.model('Reply', replySchema);
 
-module.exports = Response;
+module.exports = Reply;

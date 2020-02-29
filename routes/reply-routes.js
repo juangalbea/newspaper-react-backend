@@ -1,15 +1,15 @@
-// routes/Response-routes.js
+// routes/Reply-routes.js
 
 const express = require('express');
 const mongoose = require('mongoose');
-const Response = require('../models/response-model');
+const Reply = require('../models/reply-model');
 const Comment = require('../models/comment-model');
-
+const New = require('../models/new-model');
 const router  = express.Router();
 
-// GET route => to retrieve a specific Response
-router.get('/comments/:commentId/responses/:ResponseId', (req, res, next) => {
-  Response.findById(req.params.ResponseId)
+// GET route => to retrieve a specific Reply
+router.get('/comments/:commentID/replies/:replyID', (req, res, next) => {
+  Reply.findById(req.params.replyID)
   .then(theResponse =>{
       res.json(theResponse);
   })
@@ -18,16 +18,16 @@ router.get('/comments/:commentId/responses/:ResponseId', (req, res, next) => {
   })
 });
 
-// POST route => to create a comment Response
-router.post('/responses', (req, res, next)=>{
+// POST route => to create a comment Reply
+router.post('/replies', (req, res, next)=>{
   
-  Response.create({
+  Reply.create({
       title: req.body.title,
       description: req.body.description,  
       comment: req.body.commentID
   })
     .then(response => {
-        Comment.findByIdAndUpdate(req.body.commentID, { $push:{ responses: response._id } })
+        Comment.findByIdAndUpdate(req.body.commentID, { $push:{ replies: response._id } })
         .then(theResponse => {
             res.json(theResponse);
         })
@@ -40,34 +40,34 @@ router.post('/responses', (req, res, next)=>{
     })
 })
 
-// PUT route => to update a specific Response
-router.put('/responses/:id', (req, res, next)=>{
+// PUT route => to update a specific Reply
+router.put('/replies/:id', (req, res, next)=>{
 
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
   }
 
-  Response.findByIdAndUpdate(req.params.id, req.body)
+  Reply.findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
-      res.json({ message: `Response with ${req.params.id} is updated successfully.` });
+      res.json({ message: `Reply with ${req.params.id} is updated successfully.` });
     })
     .catch(err => {
       res.json(err);
     })
 })
 
-// DELETE route => to delete a specific Response
-router.delete('/responses/:id', (req, res, next)=>{
+// DELETE route => to delete a specific Reply
+router.delete('/replies/:id', (req, res, next)=>{
 
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
   }
 
-  Response.findByIdAndRemove(req.params.id)
+  Reply.findByIdAndRemove(req.params.id)
     .then(() => {
-      res.json({ message: `Response with ${req.params.id} is removed successfully.` });
+      res.json({ message: `Reply with ${req.params.id} is removed successfully.` });
     })
     .catch(err => {
       res.json(err);

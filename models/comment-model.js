@@ -7,7 +7,7 @@ const commentSchema = new Schema({
   title: String,
   description: String,
   new: {type: Schema.Types.ObjectId, ref: 'New'},
-  responses: [{type: Schema.Types.ObjectId, ref: 'Response'}],
+  replies: [{type: Schema.Types.ObjectId, ref: 'Reply'}],
 });
 
 const Comment = mongoose.model('Comment', commentSchema);

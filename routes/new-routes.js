@@ -36,7 +36,7 @@ router.post('/news', (req, res, next)=>{
 
 // GET route => to get a specific new/detailed view
 router.get('/news/:id', (req, res, next)=>{
-
+  console.log(req.params.id)
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
